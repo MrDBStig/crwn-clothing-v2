@@ -1,6 +1,10 @@
 import { useCartContext } from "../../contexts/cart.context";
 
-import "./checkout-item.styles.scss";
+import {
+  CheckoutItemWrapper,
+  ImageWrapper,
+  RemoveButton,
+} from "./checkout-item.styles";
 
 const CheckoutItem = (item) => {
   const { name, price, imageUrl, quantity } = item;
@@ -13,10 +17,10 @@ const CheckoutItem = (item) => {
   const clearItem = () => clearItemFromCart(item);
 
   return (
-    <div className="checkout-item-container">
-      <div className="image-container">
+    <CheckoutItemWrapper>
+      <ImageWrapper>
         <img src={imageUrl} alt={name} />
-      </div>
+      </ImageWrapper>
       <span className="name">{name}</span>
       <span className="quantity">
         <div onClick={removeItem} className="arrow">
@@ -28,10 +32,8 @@ const CheckoutItem = (item) => {
         </div>
       </span>
       <span className="price">{price}</span>
-      <div className="remove-button" onClick={clearItem}>
-        &#10005;
-      </div>
-    </div>
+      <RemoveButton onClick={clearItem}>&#10005;</RemoveButton>
+    </CheckoutItemWrapper>
   );
 };
 
