@@ -5,7 +5,7 @@ import { useProductContext } from "../../contexts/product.context";
 
 import ProductCard from "../../components/product-card/product-card.component";
 
-import "./category.styles.scss";
+import { CategoryTitle, CategoryWrapper } from "./category.styles";
 
 const Category = () => {
   const { category } = useParams();
@@ -19,13 +19,13 @@ const Category = () => {
 
   return (
     <>
-      <h2 className="category-title">{category}</h2>
-      <div className="category-container">
+      <CategoryTitle>{category}</CategoryTitle>
+      <CategoryWrapper>
         {categoryProducts &&
           categoryProducts.map((product) => (
             <ProductCard key={product.id} {...product} />
           ))}
-      </div>
+      </CategoryWrapper>
     </>
   );
 };

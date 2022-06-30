@@ -1,4 +1,6 @@
-.product-card-container {
+import styled from "styled-components";
+
+export const ProductCardWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -10,7 +12,7 @@
     width: 100%;
     height: 95%;
     -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
     margin-bottom: 5px;
   }
 
@@ -32,21 +34,21 @@
       display: flex;
     }
   }
+`;
 
-  .footer {
-    width: 100%;
-    height: 5%;
-    display: flex;
-    justify-content: space-between;
-    font-size: 18px;
+export const Footer = styled.div`
+  width: 100%;
+  height: 5%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
 
-    .name {
-      width: 90%;
-      margin-bottom: 15px;
-    }
-
-    .price {
-      width: 10%;
-    }
+  .name {
+    width: 90%;
+    margin-bottom: 15px;
   }
-}
+
+  .price {
+    width: 10%;
+  }
+`;
