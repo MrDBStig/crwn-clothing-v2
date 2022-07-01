@@ -1,4 +1,6 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useReducer } from "react";
+
+import { createAction } from "../utils/reducer/reducer.utils";
 
 const addToCart = (cartItems, productToAdd) => {
   const existingCartItem = cartItems.find(
@@ -46,39 +48,68 @@ export const CartContext = createContext({
   total: 0,
 });
 
+const INITIAL_STATE = {
+  isCartOpen: false,
+  cartCount: 0,
+  total: 0,
+  cartItems: [],
+};
+
+const cartReducer = (state, action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case "SET_CART_ITEMS":
+      return { ...state, ...payload };
+
+    case "SET_CART_OPEN":
+      return { ...state, isCartOpen: payload };
+
+    default:
+      throw new Error(`Unhandled action type ${type} in cartReducer`);
+  }
+};
+
 export const CartProvider = ({ children }) => {
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
-  const [cartCount, setCartCount] = useState(0);
-  const [total, setTotal] = useState(0);
+  const [state, dispatch] = useReducer(cartReducer, INITIAL_STATE);
 
-  const addItemToCart = (productToAdd) => {
-    setCartItems(addToCart(cartItems, productToAdd));
-  };
+  const { cartItems, total, cartCount, isCartOpen } = state;
 
-  const removeItemFromCart = (productToRemove) => {
-    setCartItems(removeCartItem(cartItems, productToRemove));
-  };
-
-  const clearItemFromCart = (productToClear) => {
-    setCartItems(clearCartItem(cartItems, productToClear));
-  };
-
-  useEffect(() => {
-    const newCartItems = cartItems.reduce(
+  const updateCartItemsReducer = (newCartItems) => {
+    const newCartCount = newCartItems.reduce(
       (accumulator, item) => accumulator + item.quantity,
       0
     );
-    setCartCount(newCartItems);
-  }, [cartItems]);
-
-  useEffect(() => {
-    const newCartTotal = cartItems.reduce(
+    const newCartTotal = newCartItems.reduce(
       (accumulator, item) => accumulator + item.price * item.quantity,
       0
     );
-    setTotal(newCartTotal);
-  }, [cartItems]);
+
+    dispatch(
+      createAction("SET_CART_ITEMS", {
+        cartItems: newCartItems,
+        cartCount: newCartCount,
+        total: newCartTotal,
+      })
+    );
+  };
+
+  const addItemToCart = (productToAdd) => {
+    const newCartItems = addToCart(cartItems, productToAdd);
+    updateCartItemsReducer(newCartItems);
+  };
+
+  const removeItemFromCart = (productToRemove) => {
+    const newCartItems = removeCartItem(cartItems, productToRemove);
+    updateCartItemsReducer(newCartItems);
+  };
+
+  const clearItemFromCart = (productToClear) => {
+    const newCartItems = clearCartItem(cartItems, productToClear);
+    updateCartItemsReducer(newCartItems);
+  };
+
+  const setIsCartOpen = (bool) => dispatch(createAction("SET_CART_OPEN", bool));
 
   return (
     <CartContext.Provider
