@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ProductCardWrapper = styled.div`
+export const ProductCartContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -11,7 +11,6 @@ export const ProductCardWrapper = styled.div`
   img {
     width: 100%;
     height: 95%;
-    -o-object-fit: cover;
     object-fit: cover;
     margin-bottom: 5px;
   }
@@ -42,13 +41,13 @@ export const Footer = styled.div`
   display: flex;
   justify-content: space-between;
   font-size: 18px;
+`;
 
-  .name {
-    width: 90%;
-    margin-bottom: 15px;
-  }
+export const Name = styled.span`
+  width: 90%;
+  margin-bottom: 15px;
+`;
 
-  .price {
-    width: 10%;
-  }
+export const Price = styled.span`
+  width: 10%;
 `;
