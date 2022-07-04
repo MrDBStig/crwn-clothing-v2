@@ -1,25 +1,25 @@
 import ProductCard from "../product-card/product-card.component";
 
 import {
-  CategoryPreviewWrapper,
-  CategoryTitleLink,
+  CategoryPreviewContainer,
+  Title,
   Preview,
 } from "./category-preview.styles";
 
 const CategoryPreview = ({ title, products }) => {
   return (
-    <CategoryPreviewWrapper>
+    <CategoryPreviewContainer>
       <h2>
-        <CategoryTitleLink to={title}>{title.toUpperCase()}</CategoryTitleLink>
+        <Title to={title}>{title.toUpperCase()}</Title>
       </h2>
       <Preview>
         {products
-          .filter((_, index) => index < 4)
+          .filter((_, idx) => idx < 4)
           .map((product) => (
-            <ProductCard key={product.id} {...product} />
+            <ProductCard key={product.id} product={product} />
           ))}
       </Preview>
-    </CategoryPreviewWrapper>
+    </CategoryPreviewContainer>
   );
 };
 

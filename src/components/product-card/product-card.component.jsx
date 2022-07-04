@@ -1,26 +1,38 @@
-import { ProductCardWrapper, Footer } from "./product-card.styles";
+import { useDispatch, useSelector } from "react-redux";
+
+import { selectCartItems } from "../../store/cart/cart.selector";
+import { addItemToCart } from "../../store/cart/cart.action";
 
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 
-import { useCartContext } from "../../contexts/cart.context";
+import {
+  ProductCartContainer,
+  Footer,
+  Name,
+  Price,
+} from "./product-card.styles";
 
-const ProductCard = (product) => {
+const ProductCard = ({ product }) => {
   const { name, price, imageUrl } = product;
-  const { addItemToCart } = useCartContext();
+  const dispatch = useDispatch();
+  const cartItems = useSelector(selectCartItems);
 
-  const addProduct = () => addItemToCart(product);
+  const addProductToCart = () => dispatch(addItemToCart(cartItems, product));
 
   return (
-    <ProductCardWrapper>
-      <img src={imageUrl} alt={name} />
+    <ProductCartContainer>
+      <img src={imageUrl} alt={`${name}`} />
       <Footer>
-        <span className="name">{name}</span>
-        <span className="price">{price}</span>
+        <Name>{name}</Name>
+        <Price>{price}</Price>
       </Footer>
-      <Button buttonType={BUTTON_TYPE_CLASSES.inverted} onClick={addProduct}>
-        Add to cart
+      <Button
+        buttonType={BUTTON_TYPE_CLASSES.inverted}
+        onClick={addProductToCart}
+      >
+        Add to card
       </Button>
-    </ProductCardWrapper>
+    </ProductCartContainer>
   );
 };
 
