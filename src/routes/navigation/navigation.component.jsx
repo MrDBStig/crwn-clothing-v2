@@ -1,33 +1,40 @@
+import { Fragment } from "react";
 import { Outlet } from "react-router-dom";
-
-import { useUserContext } from "../../contexts/user.context";
-import { useCartContext } from "../../contexts/cart.context";
+import { useSelector, useDispatch } from "react-redux";
 
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 
-import { signOutUser } from "../../utils/firebase/firebase.utils";
+import { selectCurrentUser } from "../../store/user/user.selector";
+import { selectIsCartOpen } from "../../store/cart/cart.selector";
+import { signOutStart } from "../../store/user/user.action";
+
 import { ReactComponent as CrwnLogo } from "../../assets/crown.svg";
 
 import {
-  NavigationWrapper,
-  LogoWrapper,
-  NavLinksWrapper,
+  NavigationContainer,
+  NavLinks,
   NavLink,
+  LogoContainer,
 } from "./navigation.styles";
 
 const Navigation = () => {
-  const { currentUser } = useUserContext();
-  const { isCartOpen } = useCartContext();
+  const currentUser = useSelector(selectCurrentUser);
+  const isCartOpen = useSelector(selectIsCartOpen);
+
+  const dispatch = useDispatch();
+
+  const signOutUser = () => dispatch(signOutStart());
 
   return (
-    <>
-      <NavigationWrapper>
-        <LogoWrapper to="/">
+    <Fragment>
+      <NavigationContainer>
+        <LogoContainer to="/">
           <CrwnLogo className="logo" />
-        </LogoWrapper>
-        <NavLinksWrapper>
+        </LogoContainer>
+        <NavLinks>
           <NavLink to="/shop">SHOP</NavLink>
+
           {currentUser ? (
             <NavLink as="span" onClick={signOutUser}>
               SIGN OUT
@@ -36,11 +43,11 @@ const Navigation = () => {
             <NavLink to="/auth">SIGN IN</NavLink>
           )}
           <CartIcon />
-        </NavLinksWrapper>
+        </NavLinks>
         {isCartOpen && <CartDropdown />}
-      </NavigationWrapper>
+      </NavigationContainer>
       <Outlet />
-    </>
+    </Fragment>
   );
 };
 

@@ -1,41 +1,49 @@
-import { useCartContext } from "../../contexts/cart.context";
-
-import CheckoutItem from "../../components/checkout-item.component.jsx/checkout-item.component";
+import { useSelector } from "react-redux";
 
 import {
+  selectCartItems,
+  selectCartTotal,
+} from "../../store/cart/cart.selector";
+
+import CheckoutItem from "../../components/checkout-item/checkout-item.component";
+import PaymentForm from "../../components/payment-form/payment-form.component";
+
+import {
+  CheckoutContainer,
   CheckoutHeader,
-  CheckoutWrapper,
-  CheckoutHeaderBlock,
-  CheckoutTotal,
+  HeaderBlock,
+  Total,
 } from "./checkout.styles";
 
 const Checkout = () => {
-  const { cartItems, total } = useCartContext();
+  const cartItems = useSelector(selectCartItems);
+  const cartTotal = useSelector(selectCartTotal);
 
   return (
-    <CheckoutWrapper>
+    <CheckoutContainer>
       <CheckoutHeader>
-        <CheckoutHeaderBlock>
+        <HeaderBlock>
           <span>Product</span>
-        </CheckoutHeaderBlock>
-        <CheckoutHeaderBlock>
+        </HeaderBlock>
+        <HeaderBlock>
           <span>Description</span>
-        </CheckoutHeaderBlock>
-        <CheckoutHeaderBlock>
+        </HeaderBlock>
+        <HeaderBlock>
           <span>Quantity</span>
-        </CheckoutHeaderBlock>
-        <CheckoutHeaderBlock>
+        </HeaderBlock>
+        <HeaderBlock>
           <span>Price</span>
-        </CheckoutHeaderBlock>
-        <CheckoutHeaderBlock>
+        </HeaderBlock>
+        <HeaderBlock>
           <span>Remove</span>
-        </CheckoutHeaderBlock>
+        </HeaderBlock>
       </CheckoutHeader>
-      {cartItems.map((item) => {
-        return <CheckoutItem key={item.id} {...item} />;
-      })}
-      <CheckoutTotal>Total : ${total}</CheckoutTotal>
-    </CheckoutWrapper>
+      {cartItems.map((cartItem) => (
+        <CheckoutItem key={cartItem.id} cartItem={cartItem} />
+      ))}
+      <Total>Total: ${cartTotal}</Total>
+      <PaymentForm />
+    </CheckoutContainer>
   );
 };
 
