@@ -1,7 +1,6 @@
 import {
   createAction,
   withMatcher,
-  Action,
   ActionWithPayload,
 } from "../../utils/reducer/reducer.utils";
 import { CART_ACTION_TYPES, CartItem } from "./cart.types";
