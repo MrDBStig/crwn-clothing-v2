@@ -7,6 +7,7 @@ import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component
 
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { selectIsCartOpen } from "../../store/cart/cart.selector";
+import { clearCart } from "../../store/cart/cart.action";
 import { signOutStart } from "../../store/user/user.action";
 
 import { ReactComponent as CrwnLogo } from "../../assets/crown.svg";
@@ -24,7 +25,10 @@ const Navigation = () => {
 
   const dispatch = useDispatch();
 
-  const signOutUser = () => dispatch(signOutStart());
+  const signOutUser = () => {
+    dispatch(signOutStart());
+    dispatch(clearCart());
+  };
 
   return (
     <Fragment>

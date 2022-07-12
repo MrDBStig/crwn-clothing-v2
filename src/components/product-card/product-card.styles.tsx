@@ -13,6 +13,8 @@ export const ProductCartContainer = styled.div`
     height: 95%;
     object-fit: cover;
     margin-bottom: 5px;
+    overflow: hidden;
+    border-radius: 7px;
   }
 
   button {
