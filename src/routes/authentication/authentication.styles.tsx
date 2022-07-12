@@ -4,7 +4,7 @@ export const AuthenticationContainer = styled.div`
   display: flex;
   max-width: 600px;
   justify-content: space-between;
-  margin: 30px;
+  margin: 30px auto;
   gap: 30px;
 
   @media screen and (max-width: 520px) {
