@@ -13,6 +13,7 @@ import {
   CheckoutHeader,
   HeaderBlock,
   Total,
+  WarningContainer,
 } from "./checkout.styles";
 
 const Checkout = () => {
@@ -42,6 +43,11 @@ const Checkout = () => {
         <CheckoutItem key={cartItem.id} cartItem={cartItem} />
       ))}
       <Total>Total: ${cartTotal}</Total>
+      <WarningContainer>
+        *Please use the following test credit card for fake payments*
+        <br />
+        4242 4242 4242 4242 - Exp: 01/33 (any MM/YY in future) - CVC & ZIP: any
+      </WarningContainer>
       <PaymentForm />
     </CheckoutContainer>
   );

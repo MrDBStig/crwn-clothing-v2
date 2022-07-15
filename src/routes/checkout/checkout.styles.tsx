@@ -29,13 +29,20 @@ export const HeaderBlock = styled.div`
     width: 8%;
   }
 
-  /* @media screen and (max-width: 600px) {
+  @media screen and (max-width: 600px) {
     width: 10%;
-  } */
+  }
 `;
 
 export const Total = styled.span`
   margin-top: 30px;
   margin-left: auto;
   font-size: 36px;
+`;
+
+export const WarningContainer = styled.div`
+  text-align: center;
+  margin-top: 30px;
+  font-size: 22px;
+  color: orangered;
 `;
